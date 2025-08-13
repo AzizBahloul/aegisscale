@@ -13,12 +13,13 @@ RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 # upgrade pip to latest patch release
 RUN pip install --upgrade pip
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY setup.py requirements.txt ./
+# Install package (and its dependencies)
+RUN pip install --no-cache-dir .
 
 COPY . .
 
 EXPOSE 8000
 EXPOSE 8001
 
-CMD ["uvicorn", "aegisscale.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+CMD ["aegisscale", "--host", "0.0.0.0", "--port", "8000"]
