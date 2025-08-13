@@ -2,7 +2,7 @@ import ray
 from ray import tune
 from ray.rllib.env.multi_agent_env import MultiAgentEnv
 import numpy as np
-import gym           # type: ignore
+import gym  # type: ignore
 from gym import spaces  # type: ignore
 
 

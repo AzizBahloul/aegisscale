@@ -13,7 +13,6 @@ def load_kube_config():
             config.load_kube_config()
 
 
-
 class K8sScaler:
     def __init__(self, namespace="default"):
         load_kube_config()
@@ -64,7 +63,9 @@ class MockK8sScaler:
     def set_replicas(self, deployment_name: str, replicas: int):
         pass
 
-    def patch_resources(self, deployment_name: str, container_name: str, cpu: str, memory: str):
+    def patch_resources(
+        self, deployment_name: str, container_name: str, cpu: str, memory: str
+    ):
         pass
 
     def get_deployment_replicas(self, deployment_name):

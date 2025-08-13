@@ -16,6 +16,7 @@ class Orchestrator:
         self.agents = {a.name: a for a in agents}
         if dry_run:
             from .k8s_scaler import MockK8sScaler
+
             self.k8s = MockK8sScaler(namespace=namespace)
         else:
             self.k8s = K8sScaler(namespace=namespace)
