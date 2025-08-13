@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  aegisscale:
+    build: .
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    environment:
+      - KUBECONFIG=/root/.kube/config
+    volumes:
+      - ./kubeconfig:/root/.kube:ro
+    restart: unless-stopped

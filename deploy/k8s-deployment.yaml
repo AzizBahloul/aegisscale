@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aegisscale
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aegisscale
+  template:
+    metadata:
+      labels:
+        app: aegisscale
+    spec:
+      containers:
+      - name: aegisscale
+        image: aegisscale:latest
+        ports:
+        - containerPort: 8000
+        - containerPort: 8001
+        env:
+        - name: PROM_METRICS_PORT
+          value: "8001"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpu-service
+  template:
+    metadata:
+      labels:
+        app: cpu-service
+    spec:
+      containers:
+      - name: cpu-service
+        image: busybox
+        command: ["sh", "-c", "while true; do echo hello; sleep 5; done"]
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
