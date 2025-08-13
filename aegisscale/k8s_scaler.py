@@ -13,6 +13,7 @@ def load_kube_config():
             config.load_kube_config()
 
 
+
 class K8sScaler:
     def __init__(self, namespace="default"):
         load_kube_config()
@@ -53,3 +54,18 @@ class K8sScaler:
     def get_deployment_replicas(self, deployment_name):
         dep = self.apps.read_namespaced_deployment(deployment_name, self.namespace)
         return dep.spec.replicas
+
+
+# Mock scaler for dry run mode
+class MockK8sScaler:
+    def __init__(self, namespace="default"):
+        self.namespace = namespace
+
+    def set_replicas(self, deployment_name: str, replicas: int):
+        pass
+
+    def patch_resources(self, deployment_name: str, container_name: str, cpu: str, memory: str):
+        pass
+
+    def get_deployment_replicas(self, deployment_name):
+        return 1

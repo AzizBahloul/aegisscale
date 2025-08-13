@@ -14,8 +14,12 @@ logging.basicConfig(level=logging.INFO)
 class Orchestrator:
     def __init__(self, agents: List[BaseAgent], namespace="default", dry_run=False):
         self.agents = {a.name: a for a in agents}
-        self.k8s = K8sScaler(namespace=namespace)
-        self.metrics = MetricsExporter(port=8001)
+        if dry_run:
+            from .k8s_scaler import MockK8sScaler
+            self.k8s = MockK8sScaler(namespace=namespace)
+        else:
+            self.k8s = K8sScaler(namespace=namespace)
+        self.metrics = MetricsExporter(port=9001)
         self.dry_run = dry_run
         self.budget = {"cpu": 32.0, "memory": 32 * 1024, "gpu": 4, "storage": 2000.0}
 

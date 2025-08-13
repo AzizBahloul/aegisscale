@@ -1,4 +1,7 @@
-FROM python:3.11-slim-bullseye
+FROM python:3.11-slim-bookworm
+
+# Apply security patches to reduce vulnerabilities
+RUN apt-get update && apt-get upgrade -y && apt-get install --only-upgrade -y openssl libssl3 && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
